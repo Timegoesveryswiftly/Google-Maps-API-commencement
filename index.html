@@ -14,13 +14,23 @@
 <body style="height: 100%;">
   <div id="map"></div>
   <script>
-    var latlang = new google.maps.LatLng(35.66, 139.69);
+    var latlng = new google.maps.LatLng(35.70, 139.6707);
     var options = {
       zoom: 15,
-      center: latlang,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      center: latlng,
+      rotateControl: false,
+      draggableCursor : 'all-scroll',
+      draggingCursor : 'not-allowed',
+      scaleControl : true,
+      noClear : true,
+      mapTypeId: google.maps.MapTypeId.TERRAIN
     };
     var map = new google.maps.Map(document.getElementById('map'), options);
+    var marker = new google.maps.Marker({
+      position: map.getCenter(),
+      opacity: 0.8,
+      map: map
+    });
   </script>
 </body>
 </html>
