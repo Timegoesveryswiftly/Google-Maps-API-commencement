@@ -5,9 +5,7 @@
   <title>Google Maps の練習</title>
   <script src="http://maps.google.com/maps/api/js?languge=ja"></script>
   <style>
-    #map {
-      width: 100%;
-      height: 100%;
+    #map { width: 100%; height: 100%;
     }
   </style>
 </head>
@@ -22,7 +20,7 @@
         // var latlng = new google.maps.LatLng(35.70, 139.6707);
         var latlng = result[0].geometry.location;
         var options = {
-          zoom: 15,
+          zoom: 13,
           center: latlng,
           rotateControl: false,
           draggableCursor : 'all-scroll',
@@ -43,7 +41,18 @@
             draggable: true,
             map: map
           });
-
+          geocoder.geocode({
+            'latLng': event.latLng
+          }, function(result, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              var infoWindow = new google.maps.InfoWindow({
+                content: result[0].formatted_address
+              });
+              infoWindow.open(map, marker);
+            } else {
+              alert("エラー");
+            }
+          });
         });
 
       } else {
