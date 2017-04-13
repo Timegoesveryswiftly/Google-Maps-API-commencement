@@ -14,23 +14,65 @@
 <body style="height: 100%;">
   <div id="map"></div>
   <script>
-    var latlng = new google.maps.LatLng(35.70, 139.6707);
-    var options = {
-      zoom: 15,
-      center: latlng,
-      rotateControl: false,
-      draggableCursor : 'all-scroll',
-      draggingCursor : 'not-allowed',
-      scaleControl : true,
-      noClear : true,
-      mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
-    var map = new google.maps.Map(document.getElementById('map'), options);
-    var marker = new google.maps.Marker({
-      position: map.getCenter(),
-      opacity: 0.8,
-      map: map
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      'address': '山口県長門市'
+    }, function(result, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        // var latlng = new google.maps.LatLng(35.70, 139.6707);
+        var latlng = result[0].geometry.location;
+        var options = {
+          zoom: 15,
+          center: latlng,
+          rotateControl: false,
+          draggableCursor : 'all-scroll',
+          draggingCursor : 'not-allowed',
+          scaleControl : true,
+          noClear : true,
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        var map = new google.maps.Map(document.getElementById('map'), options);
+
+        google.maps.event.addListener(map, 'click', function(event){
+          var marker = new google.maps.Marker({
+            icon: new google.maps.MarkerImage('aaab.jpg'),
+            title: 'マーカー',
+            position: event.latLng,
+            opacity: 0.9,
+            // visible: true,
+            draggable: true,
+            map: map
+          });
+
+        });
+
+      } else {
+        alert('エラーです！');
+      }
     });
+
+
+    // var infoWindow = new google.maps.InfoWindow({
+    //   content: '<strong>中野周辺です</strong>',
+    // });
+    //
+    // var marker = new google.maps.Marker({
+    //   // position: map.getCenter(),
+    //   map: map
+    // });
+    //
+    // google.maps.event.addListener(marker, 'click', function(){
+    //   infoWindow.open(map, marker);
+    // });
+    //
+
   </script>
+
+  <!-- <div id="map" style="height:560px"></div>
+  <table border="1" cellspacing="0">
+  <tr><th>LAT</th><td id="show_lat"></td></tr>
+  <tr><th>LNG</th><td id="show_lng"></td></tr>
+  </table> -->
+
 </body>
 </html>
